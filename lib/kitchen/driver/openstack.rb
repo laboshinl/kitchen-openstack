@@ -133,9 +133,9 @@ module Kitchen
         server_def = init_configuration
 
         if config[:network_ref]
-          networks = [].concat([config[:network_ref]])
-          server_def[:nics] = networks.flatten.map do |net|
-            { 'net_id' => find_network(net).id }
+          networks = config[:network_ref]
+          server_def[:nics] = networks.map do |net|
+            { 'net_id' => find_network([net].flatten[0]).id, 'v4_fixed_ip' => [net].flatten[1] }
           end
         end
 
